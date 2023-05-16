@@ -1,0 +1,38 @@
+import os
+import re
+import imb_db
+
+dsn_driver = "{IBM DB2 ODBC DRIVER}"
+dsn_database = "database_name"
+dsn_hostname = "hostname"
+dsn_port = "port"
+dsn_protocol = "TCPIP"
+dsn_uid = "username"
+dsn_pwd = "password"
+
+dsn = (
+    "DRIVER={0};"
+    "DATABASE={1};"
+    "HOSTNAME={2};"
+    "PORT={3};"
+    "PROTOCOL={4};"
+    "UID={5};"
+    "PWD={6};").format(dsn_driver, dsn_database, dsn_hostname, dsn_port, dsn_protocol, dsn_uid, dsn_pwd)
+
+
+
+from flask import Flask
+
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+try:
+    conn = ibm_db.connect(dsn, "", "")
+    print("Connected to database: ", dsn_database)
+
+except:
+    print("Unable to connect to database")
